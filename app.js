@@ -5,6 +5,34 @@ const uid = params.get('uid');
 const validUid = typeof uid === 'string' && /^[A-Za-z0-9_-]{1,128}$/.test(uid);
 const lineUrl = 'https://line.me/R/oaMessage/%40701coecn/';
 const dialog = document.getElementById('line-guide');
+
+const menuToggle = document.querySelector('.menu-toggle');
+const mobileNavigation = document.getElementById('mobile-navigation');
+const mobileLayout = window.matchMedia('(max-width:800px)');
+function closeNavigation(){
+  if(mobileNavigation.open) mobileNavigation.close();
+}
+menuToggle.addEventListener('click',()=>{
+  if(!mobileLayout.matches) return;
+  mobileNavigation.showModal();
+  menuToggle.setAttribute('aria-expanded','true');
+  menuToggle.setAttribute('aria-label','メニューを閉じる');
+  document.body.classList.add('navigation-open');
+});
+mobileNavigation.querySelector('.mobile-menu-close').addEventListener('click',closeNavigation);
+mobileNavigation.querySelectorAll('a').forEach(link=>link.addEventListener('click',closeNavigation));
+mobileNavigation.addEventListener('close',()=>{
+  menuToggle.setAttribute('aria-expanded','false');
+  menuToggle.setAttribute('aria-label','メニューを開く');
+  document.body.classList.remove('navigation-open');
+});
+mobileNavigation.addEventListener('click',event=>{
+  if(event.target!==mobileNavigation) return;
+  const box=mobileNavigation.getBoundingClientRect();
+  if(event.clientX<box.left||event.clientX>box.right||event.clientY<box.top||event.clientY>box.bottom) closeNavigation();
+});
+mobileLayout.addEventListener('change',event=>{if(!event.matches) closeNavigation();});
+
 document.querySelectorAll('.line-return').forEach(a => a.href=lineUrl);
 document.querySelectorAll('.application-link').forEach(a=>{
   if(validUid){const url=new URL('https://q6501htp.autosns.app/fm/NbOXdEWy0f');url.searchParams.set('uid',uid);a.href=url.href;a.rel='noreferrer';}
