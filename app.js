@@ -142,6 +142,16 @@ play.addEventListener('click',()=>{
  timer=setTimeout(tick,5500);
 });
 document.getElementById('demo-reset').addEventListener('click',()=>{stop();usedFrom='a';selectedStage='b';stageSelect.value='b';render('a');keepDemoVisible();});
+document.getElementById('show-video-message').addEventListener('click',()=>{
+ stop();selectedStage='b';stageSelect.value='b';render('remind');keepDemoVisible();
+ const videoMessage=chat.querySelector('.chat-video');
+ if(videoMessage)chat.scrollTop+=videoMessage.getBoundingClientRect().top-chat.getBoundingClientRect().top-10;
+});
+document.addEventListener('play',event=>{
+ if(event.target.tagName!=='VIDEO')return;
+ stop();
+ document.querySelectorAll('video').forEach(video=>{if(video!==event.target)video.pause();});
+},true);
 document.addEventListener('visibilitychange',()=>{if(document.hidden)stop();});
 const credit=document.getElementById('demo-video-credit');credit.hidden=false;
 const source=node('a','','料理映像：Ali Alcántara / Pexels');source.href='https://www.pexels.com/video/delicious-japanese-ramen-noodles-close-up-31387241/';source.target='_blank';source.rel='noopener';credit.append(source);
