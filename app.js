@@ -1,10 +1,7 @@
 (() => {
 'use strict';
-const params = new URLSearchParams(location.search);
-const uid = params.get('uid');
-const validUid = typeof uid === 'string' && /^[A-Za-z0-9_-]{1,128}$/.test(uid);
 const lineUrl = 'https://line.me/R/oaMessage/%40701coecn/';
-const dialog = document.getElementById('line-guide');
+const bookingUrl = 'https://timerex.net/s/consultant.shuu.0907_97f8/c441f2d4';
 
 const menuToggle = document.querySelector('.menu-toggle');
 const mobileNavigation = document.getElementById('mobile-navigation');
@@ -35,11 +32,10 @@ mobileLayout.addEventListener('change',event=>{if(!event.matches) closeNavigatio
 
 document.querySelectorAll('.line-return').forEach(a => a.href=lineUrl);
 document.querySelectorAll('.application-link').forEach(a=>{
-  if(validUid){const url=new URL('https://q6501htp.autosns.app/fm/NbOXdEWy0f');url.searchParams.set('uid',uid);a.href=url.href;a.rel='noreferrer';}
-  else{a.href=lineUrl;a.addEventListener('click',e=>{if(dialog.showModal){e.preventDefault();dialog.showModal();}});}
+  a.href=bookingUrl;
+  a.rel='noreferrer';
 });
-document.querySelector('.dialog-close').addEventListener('click',()=>dialog.close());
-dialog.addEventListener('click',e=>{if(e.target===dialog)dialog.close();});
+
 const videoUrl='https://videos.pexels.com/video-files/31387241/13393574_1920_1080_30fps.mp4';
 const scenes={
  a:{title:'LINE登録と同時に、初回の特典を。',description:'おーぶでは、登録直後にあいさつと餃子または唐揚げの特典をご案内しています。登録と初回特典を、ひとつの流れとして設計します。',date:'LINE登録直後',message:'麺やaube ～おーぶ～へようこそ。ご登録ありがとうございます。まずは、餃子または唐揚げ一皿の特典をご案内します。ご利用後は、次回の特典もお楽しみください。',coupon:'A',couponTitle:'餃子 or 唐揚げ一皿',expiry:'有効期限はクーポン画面で確認',next:'used',image:'assets/aube-initial-coupon.png'},
